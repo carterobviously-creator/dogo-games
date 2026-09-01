@@ -46,7 +46,7 @@
         }
 
         .hud-panel {
-            background: rgba(2, 2, 15, 0.75);
+            background: rgba(2, 2, 15, 0.85);
             border: 1px solid #00ffcc;
             box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
             border-radius: 4px;
@@ -88,7 +88,7 @@
 
         .pilot-info p {
             font-size: 11px;
-            color: #ff00ff;
+            color: #00ffcc;
         }
 
         .stats-panel {
@@ -103,14 +103,14 @@
             text-shadow: 0 0 5px #00ffcc;
         }
 
-        /* Crosshair */
+        /* Flight Target Reticle */
         .crosshair-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -125,16 +125,10 @@
         }
         .crosshair-ring {
             position: absolute;
-            width: 30px;
-            height: 30px;
-            border: 1px dashed #00ffcc;
+            width: 44px;
+            height: 44px;
+            border: 2px dashed #00ffcc;
             border-radius: 50%;
-            animation: rotateRing 10s linear infinite;
-        }
-
-        @keyframes rotateRing {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         /* Bottom Control Panel */
@@ -171,20 +165,7 @@
             padding-top: 5px;
         }
 
-        .controls-guide {
-            font-size: 11px;
-            color: #8899aa;
-            line-height: 1.4;
-            max-width: 450px;
-            border-left: 2px solid #ff00ff;
-            padding-left: 10px;
-        }
-
-        .controls-guide span {
-            color: #00ffcc;
-        }
-
-        /* In-game Custom Message Logs */
+        /* Message Notification Area */
         #notification-box {
             position: absolute;
             top: 100px;
@@ -201,20 +182,19 @@
         }
 
         .toast-msg {
-            background: rgba(255, 0, 110, 0.15);
-            border: 1px solid #ff006e;
+            background: rgba(2, 2, 20, 0.9);
+            border: 1px solid #00ffcc;
             color: #ffffff;
             padding: 8px 12px;
             border-radius: 4px;
             font-size: 12px;
             text-align: center;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 0 10px rgba(255, 0, 110, 0.3);
-            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+            animation: slideIn 0.2s ease-out;
         }
 
         @keyframes slideIn {
-            from { transform: translateY(-20px); opacity: 0; }
+            from { transform: translateY(-10px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
@@ -225,54 +205,69 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 5, 20, 0.85);
+            background: rgba(4, 4, 16, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 100;
             opacity: 1;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
         }
         .alert-content {
-            background: #0a0a20;
-            border: 2px solid #00ffcc;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.4);
-            padding: 30px;
+            background: #050515;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+            padding: 35px;
             border-radius: 8px;
-            max-width: 450px;
+            max-width: 580px;
             text-align: center;
         }
         .alert-content h1 {
             color: #ffffff;
             font-size: 24px;
             margin-bottom: 15px;
-            text-shadow: 0 0 10px #ff00ff;
+            text-shadow: 0 0 10px #00ffcc;
+            letter-spacing: 1px;
         }
         .alert-content p {
             color: #aabbcc;
             font-size: 14px;
             line-height: 1.6;
             margin-bottom: 25px;
+            text-align: left;
+        }
+        .controls-guide-list {
+            margin-top: 15px;
+            text-align: left;
+            border-left: 3px solid #ff00ff;
+            padding-left: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #aabbcc;
+        }
+        .controls-guide-list span {
+            color: #00ffcc;
+            font-weight: bold;
         }
         .alert-btn {
             background: transparent;
             border: 1px solid #00ffcc;
             color: #00ffcc;
-            padding: 10px 25px;
+            padding: 12px 30px;
             cursor: pointer;
             font-family: inherit;
             font-weight: bold;
             text-transform: uppercase;
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
             transition: all 0.2s ease;
+            margin-top: 10px;
         }
         .alert-btn:hover {
             background: #00ffcc;
             color: #020208;
-            box-shadow: 0 0 20px #00ffcc;
+            box-shadow: 0 0 25px #00ffcc;
         }
 
-        /* Scanning overlay effect */
         #scan-effect {
             position: absolute;
             top: 0;
@@ -288,7 +283,7 @@
             animation: pulseScan 0.8s ease-out;
         }
         @keyframes pulseScan {
-            0% { border-width: 50px; background-color: rgba(0, 255, 204, 0.1); }
+            0% { border-width: 40px; background-color: rgba(0, 255, 204, 0.15); }
             100% { border-width: 0px; background-color: rgba(0, 255, 204, 0); }
         }
     </style>
@@ -298,15 +293,24 @@
 <body>
 
     <div id="game-container">
-        <!-- Scan FX Screen Frame -->
         <div id="scan-effect"></div>
 
         <!-- Start Alert Modal -->
         <div id="custom-alert-modal">
             <div class="alert-content">
-                <h1>BARK HORIZON: INFINITE SCALE</h1>
-                <p>Welcome, Commander Good Boy. The flight deck has been updated with a <strong>Floating Origin Vector Engine</strong>. Explore procedural star systems separated by millions of coordinates at a perfect 60 FPS!</p>
-                <button class="alert-btn" id="start-btn">Launch Ship</button>
+                <h1>🚀 DYNAMIC INERTIA ENGINE STAGED</h1>
+                <p>Flight models are optimized to support cinematic vacuum momentum. Review your operational layout vectors before firing your booster ignition cells:</p>
+                
+                <div class="controls-guide-list">
+                    • <span>LEFT THUMBSTICK / ARROW KEYS:</span> Add Pitch &amp; Yaw angular torque momentum (Drifts smoothly)<br>
+                    • <span>BUTTON A / SPACEBAR:</span> Fire Plasma Mining Lasers<br>
+                    • <span>RIGHT TRIGGER / W KEY:</span> Main Rocket Fuel Injection (Gradual Acceleration)<br>
+                    • <span>LEFT TRIGGER / S KEY:</span> Apply Counter-Thrust Reverse Braking Pads<br>
+                    • <span>BUTTON X / V KEY:</span> Deploy Quantum Orbital Planet Scanner (Range: 50,000u)<br>
+                    • <span>RIGHT BUMPER / SHIFT KEY:</span> Engage Hyper-Warp Core Multiplier (Speed x150)
+                </div>
+
+                <button class="alert-btn" id="start-btn">Initialize Flight Deck</button>
             </div>
         </div>
 
@@ -314,10 +318,10 @@
         <div class="hud-overlay">
             <div class="hud-header">
                 <div class="hud-panel pilot-profile">
-                    <div class="avatar-box">👨‍🚀</div>
+                    <div class="avatar-box">🐶</div>
                     <div class="pilot-info">
                         <h2>ASTRA THE DOGE</h2>
-                        <p>Rank: Ultimate Infinite Explorer</p>
+                        <p>FLIGHT MODE: <span id="hud-mode-status" style="color:#00ffcc; font-weight:bold;">STANDBY</span></p>
                     </div>
                 </div>
 
@@ -336,17 +340,9 @@
 
             <div class="hud-footer">
                 <div class="hud-panel location-panel">
-                    <div class="location-title">Current System Coordinates</div>
+                    <div class="location-title">Universe Address Matrix</div>
                     <div class="location-name" id="hud-location">Deep Space</div>
-                    <div class="nav-tracker" id="hud-navigation">Closest Waypoint: Computing...</div>
-                </div>
-
-                <div class="hud-panel controls-guide">
-                    • <span>MOUSE / STICK 1:</span> Aim cursor away from center crosshair to steer<br>
-                    • <span>LEFT CLICK / BUTTON A:</span> Fire Plasma Mining Lasers<br>
-                    • <span>W / S or RT / LT:</span> Accelerate / Decelerate Flight Velocity<br>
-                    • <span>SPACEBAR / BUTTON X:</span> Trigger Quantum Planet Scanner (Range: 50,000u)<br>
-                    • <span>SHIFT / BUTTON RB:</span> Engage Hyper-Warp Drive (Speed x150)
+                    <div class="nav-tracker" id="hud-navigation">Closest Waypoint: Synchronizing...</div>
                 </div>
             </div>
         </div>
@@ -360,31 +356,39 @@
         const state = {
             credits: 0,
             speed: 0,
-            targetSpeed: 0,
             maxSpeed: 120, 
             scannedCount: 0,
             currentLocation: "Deep Space",
             planetsDiscovered: {},
             lastScanTime: 0,
             lastLaserTime: 0,
-            universePos: new THREE.Vector3(0, 0, 1000)
+            universePos: new THREE.Vector3(0, 0, 1000),
+            
+            // Vector momentum dynamics cache
+            yawVelocity: 0,
+            pitchVelocity: 0,
+            rollVelocity: 0
         };
 
-        // Inputs tracking
-        const keys = { w: false, s: false, Shift: false };
-        const mouse = { x: 0, y: 0, clicked: false };
+        // Input registers
+        const keys = {
+            w: false, s: false, a: false, d: false,
+            arrowup: false, arrowdown: false, arrowleft: false, arrowright: false,
+            shift: false, space: false, v: false
+        };
+
         let lasers = [];
 
-        // Handle Alert UI closing
+        // Close Alert UI
         document.getElementById('start-btn').addEventListener('click', () => {
             const modal = document.getElementById('custom-alert-modal');
             modal.style.opacity = '0';
-            setTimeout(() => modal.style.display = 'none', 500);
-            showToast("Floating Origin Vector Matrix initialized.");
-            showToast("Engines Online. Safe travels into the millions, Commander!");
+            setTimeout(() => modal.style.display = 'none', 400);
+            showToast("Dynamic inertia loops integrated.");
+            showToast("Flight stabilizers synchronized. Engine online.");
         });
 
-        // Setup notification toasts
+        // Toast logs
         function showToast(text) {
             const container = document.getElementById('notification-box');
             const toast = document.createElement('div');
@@ -393,12 +397,11 @@
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.5s';
-                setTimeout(() => toast.remove(), 500);
-            }, 3500);
+                toast.style.transition = 'opacity 0.4s';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
         }
 
-        // Engine simulation loop triggers on window complete loading
         window.onload = function() {
             initGame();
         };
@@ -412,7 +415,6 @@
         function initGame() {
             const container = document.getElementById('game-container');
             
-            // Core Three.JS Configurations
             scene = new THREE.Scene();
             scene.fog = new THREE.FogExp2(0x02020f, 0.0001); 
 
@@ -423,95 +425,97 @@
             renderer.setPixelRatio(window.devicePixelRatio);
             container.insertBefore(renderer.domElement, container.firstChild);
 
-            // Add Ambience Lights
-            const ambientLight = new THREE.AmbientLight(0x223344, 1.5);
+            const ambientLight = new THREE.AmbientLight(0x223344, 1.6);
             scene.add(ambientLight);
 
-            const directionalLight = new THREE.DirectionalLight(0x00ffcc, 1.2);
+            const directionalLight = new THREE.DirectionalLight(0x00ffcc, 1.3);
             directionalLight.position.set(1, 1, 2).normalize();
             scene.add(directionalLight);
 
-            const solarLight = new THREE.PointLight(0xffaa44, 2, 500000);
-            solarLight.position.set(100000, 50000, 100000);
+            const solarLight = new THREE.PointLight(0xffaa44, 2, 600000);
+            solarLight.position.set(120000, 60000, 120000);
             scene.add(solarLight);
 
-            // Construct Local Space Dust Loop & Megasize Cosmic Assets
             generateLocalSpaceDust();
             createProceduralMegaPlanets();
             generateSpaceDebrisWorldSpace();
 
-            // Player Ship Asset Initialization (LOCKED AT THE GEOMETRIC SCENE ORIGIN 0,0,0)
+            // Setup isolated transforms layer
             shipGroup = new THREE.Group();
             scene.add(shipGroup);
-            shipGroup.position.set(0, 0, 0); 
 
-            // Visual branch handles rolling mechanics isolated from flight quaternions
             shipVisuals = new THREE.Group();
             shipGroup.add(shipVisuals);
             
-            // Procedurally shape ship body
-            const bodyGeo = new THREE.CylinderGeometry(0, 2, 12, 5);
+            const bodyGeo = new THREE.CylinderGeometry(0, 1.8, 11, 5);
             bodyGeo.rotateX(Math.PI / 2);
             const bodyMat = new THREE.MeshStandardMaterial({ color: 0x112244, roughness: 0.2, metalness: 0.8 });
             const shipBody = new THREE.Mesh(bodyGeo, bodyMat);
             shipVisuals.add(shipBody);
 
-            const wingGeo = new THREE.BoxGeometry(10, 0.5, 4);
-            const wingMat = new THREE.MeshStandardMaterial({ color: 0x00ffcc, emissive: 0x003322 });
+            const wingGeo = new THREE.BoxGeometry(9.5, 0.4, 3.8);
+            const wingMat = new THREE.MeshStandardMaterial({ color: 0x00ffcc, emissive: 0x002215 });
             const shipWings = new THREE.Mesh(wingGeo, wingMat);
-            shipWings.position.set(0, -0.5, -1);
+            shipWings.position.set(0, -0.4, -0.8);
             shipVisuals.add(shipWings);
 
-            const thrusterGeo = new THREE.ConeGeometry(1.2, 3, 4);
+            const thrusterGeo = new THREE.ConeGeometry(1.1, 2.8, 4);
             thrusterGeo.rotateX(-Math.PI / 2);
             const thrusterMat = new THREE.MeshBasicMaterial({ color: 'magenta' });
             const shipThruster = new THREE.Mesh(thrusterGeo, thrusterMat);
-            shipThruster.position.set(0, 0, 6);
+            shipThruster.position.set(0, 0, 5.5);
             shipVisuals.add(shipThruster);
 
-            // Input System Connections
+            // Resilient Keyboard Event Listeners
             window.addEventListener('keydown', (e) => {
-                if (e.key.toLowerCase() === 'w') keys.w = true;
-                if (e.key.toLowerCase() === 's') keys.s = true;
-                if (e.key === 'Shift') keys.Shift = true;
-                if (e.key === ' ') triggerPulseScan();
+                const k = e.key.toLowerCase();
+                if (k === 'w') keys.w = true;
+                if (k === 's') keys.s = true;
+                if (k === 'a') keys.a = true;
+                if (k === 'd') keys.d = true;
+                if (e.key === 'ArrowUp') keys.arrowup = true;
+                if (e.key === 'ArrowDown') keys.arrowdown = true;
+                if (e.key === 'ArrowLeft') keys.arrowleft = true;
+                if (e.key === 'ArrowRight') keys.arrowright = true;
+                if (e.key === 'Shift') keys.shift = true;
+                if (e.key === ' ') keys.space = true;
+                if (k === 'v') {
+                    keys.v = true;
+                    triggerPulseScan();
+                }
             });
 
             window.addEventListener('keyup', (e) => {
-                if (e.key.toLowerCase() === 'w') keys.w = false;
-                if (e.key.toLowerCase() === 's') keys.s = false;
-                if (e.key === 'Shift') keys.Shift = false;
+                const k = e.key.toLowerCase();
+                if (k === 'w') keys.w = false;
+                if (k === 's') keys.s = false;
+                if (k === 'a') keys.a = false;
+                if (k === 'd') keys.d = false;
+                if (e.key === 'ArrowUp') keys.arrowup = false;
+                if (e.key === 'ArrowDown') keys.arrowdown = false;
+                if (e.key === 'ArrowLeft') keys.arrowleft = false;
+                if (e.key === 'ArrowRight') keys.arrowright = false;
+                if (e.key === 'Shift') keys.shift = false;
+                if (e.key === ' ') keys.space = false;
+                if (k === 'v') keys.v = false;
             });
 
-            window.addEventListener('mousemove', (e) => {
-                let rawX = (e.clientX / window.innerWidth) * 2 - 1;
-                let rawY = -(e.clientY / window.innerHeight) * 2 + 1;
-                
-                mouse.x = Math.abs(rawX) < 0.05 ? 0 : rawX;
-                mouse.y = Math.abs(rawY) < 0.05 ? 0 : rawY;
-            });
-
-            window.addEventListener('mousedown', () => { mouse.clicked = true; });
-            window.addEventListener('mouseup', () => { mouse.clicked = false; });
-
-            // Gamepad Connection Listeners
+            // Connect physical peripheral handlers
             window.addEventListener("gamepadconnected", (e) => {
-                showToast(`🎮 Controller Configured: ${e.gamepad.id.substring(0, 22)}`);
+                showToast("🎮 Gamepad hardware link verified: " + e.gamepad.id.substring(0, 16));
             });
+
             window.addEventListener("gamepaddisconnected", () => {
-                showToast("🎮 Controller disconnected.");
+                showToast("🔌 Gamepad device severed from main flight deck.");
             });
 
             window.addEventListener('resize', onWindowResize);
-
-            // Execute Animation Pipeline
             animate();
         }
 
-        // Localized high-efficiency particle box that wraps around the player to simulate speed across millions of miles
         function generateLocalSpaceDust() {
             const dustGeometry = new THREE.BufferGeometry();
-            const dustCount = 1500;
+            const dustCount = 1600;
             const positions = new Float32Array(dustCount * 3);
 
             for (let i = 0; i < dustCount * 3; i += 3) {
@@ -521,12 +525,11 @@
             }
 
             dustGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            const dustMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1.2, transparent: true, opacity: 0.8 });
+            const dustMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1.1, transparent: true, opacity: 0.75 });
             localSpaceDust = new THREE.Points(dustGeometry, dustMaterial);
             scene.add(localSpaceDust);
         }
 
-        // Procedural Planet Creator distributed over MILLIONS of coordinates
         function createProceduralMegaPlanets() {
             const planetBlueprints = [
                 { name: "BARK-9 PRIME", radius: 1200, color: 0xff3366, universePos: new THREE.Vector3(-350000, 45000, -800000), resource: "Retriever-Ore" },
@@ -538,7 +541,6 @@
             planetBlueprints.forEach(data => {
                 const group = new THREE.Group();
 
-                // Create rugged low-poly geometry structures
                 const geom = new THREE.SphereGeometry(data.radius, 32, 32);
                 const posAttr = geom.attributes.position;
                 for (let i = 0; i < posAttr.count; i++) {
@@ -560,7 +562,6 @@
                 const terrainMesh = new THREE.Mesh(geom, mat);
                 group.add(terrainMesh);
 
-                // Add stylized structural atmosphere grid line
                 const atmosGeom = new THREE.SphereGeometry(data.radius + 80, 16, 16);
                 const atmosMat = new THREE.MeshBasicMaterial({
                     color: data.color,
@@ -573,7 +574,6 @@
 
                 scene.add(group);
 
-                // Save absolute celestial coordinates into meta registers
                 planets.push({
                     meshGroup: group,
                     name: data.name,
@@ -584,7 +584,6 @@
             });
         }
 
-        // Spawn Space Bones into global coordinates
         function generateSpaceDebrisWorldSpace() {
             const boneCount = 60;
             for(let i=0; i<boneCount; i++) {
@@ -616,10 +615,9 @@
             }
         }
 
-        // Laser Projectile Spawner Mechanism
         function fireLaser() {
             const now = Date.now();
-            if (now - state.lastLaserTime < 150) return; 
+            if (now - state.lastLaserTime < 140) return; 
             state.lastLaserTime = now;
 
             const laserGeo = new THREE.CylinderGeometry(0.15, 0.15, 6, 4);
@@ -641,7 +639,6 @@
             });
         }
 
-        // Active Pulse Scanner Action
         function triggerPulseScan() {
             const now = Date.now();
             if (now - state.lastScanTime < 1500) return; 
@@ -660,86 +657,122 @@
                         state.planetsDiscovered[p.name] = true;
                         state.scannedCount++;
                         state.credits += 2500;
-                        document.getElementById('hud-scanned').innerText = `${state.scannedCount} / 4`;
+                        document.getElementById('hud-scanned').innerText = state.scannedCount + " / 4";
                         document.getElementById('hud-credits').innerText = state.credits.toLocaleString();
-                        showToast(`✨ MEGA-DATA ACQUIRED: ${p.name}!`);
-                        showToast(`Atmospheric sensor scanned ${p.resource}. (+2,500 Cr)`);
+                        showToast("✨ DATA EXPANSION UNLOCKED: " + p.name + "!");
+                        showToast("Atmospheric composition: " + p.resource + ". (+2,500 Cr)");
                     } else {
-                        showToast(`Scan confirms: ${p.name} structural analysis complete.`);
+                        showToast("Scan records verify complete map telemetry for " + p.name);
                     }
                 }
             });
 
             if (!targetFound) {
-                showToast("📡 Deep void sweep complete. No major planets detected within 50,000u.");
+                showToast("📡 Scanner array reports no planetary structures within 50,000u.");
             }
         }
 
-        // Responsive Resizing Adaptations
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        // Unified Physics & Visual Loop
+        // Processing loop
         function animate() {
             requestAnimationFrame(animate);
 
-            // Process and Merge Inputs
-            let steerX = 0;
-            let steerY = 0;
+            let targetSteerX = 0;
+            let targetSteerY = 0;
             let thrustInput = 0;
-            let isHyperdrive = keys.Shift;
+            let isHyperdrive = keys.shift;
+
+            // Keyboard input ingestion mappings
+            if (keys.a || keys.arrowleft) targetSteerX = -1.0;
+            if (keys.d || keys.arrowright) targetSteerX = 1.0;
+            if (keys.arrowup) targetSteerY = 0.85;
+            if (keys.arrowdown) targetSteerY = -0.85;
 
             if (keys.w) thrustInput = 1;
             if (keys.s) thrustInput = -1;
+            if (keys.space) fireLaser();
 
+            // Low-Level Production Gamepad Interface Reader Engine
             const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
-            let gp = null;
+            let activeGamepad = null;
+
             for (let i = 0; i < gamepads.length; i++) {
-                if (gamepads[i] && gamepads[i].connected) { gp = gamepads[i]; break; }
+                if (gamepads[i] && gamepads[i].connected) {
+                    activeGamepad = gamepads[i];
+                    break; 
+                }
             }
 
-            if (gp) {
-                const deadzone = 0.18;
-                if (Math.abs(gp.axes[0]) > deadzone) steerX = gp.axes[0];
-                if (Math.abs(gp.axes[1]) > deadzone) steerY = -gp.axes[1];
-                if (gp.buttons[7].pressed) thrustInput = 1;      
-                if (gp.buttons[6].pressed) thrustInput = -1;     
-                if (gp.buttons[5].pressed) isHyperdrive = true;  
-                if (gp.buttons[0].pressed) fireLaser();         
-                if (gp.buttons[2].pressed) triggerPulseScan();  
+            const modeStatusEl = document.getElementById('hud-mode-status');
+            if (activeGamepad) {
+                modeStatusEl.innerText = "CONTROLLER ACTIVE";
+                modeStatusEl.style.color = "#00ffcc";
+
+                const axisDeadzone = 0.18;
+                
+                if (activeGamepad.axes.length > 1) {
+                    const stickX = activeGamepad.axes[0];
+                    const stickY = activeGamepad.axes[1];
+
+                    if (Math.abs(stickX) > axisDeadzone) targetSteerX = stickX * 1.2;
+                    if (Math.abs(stickY) > axisDeadzone) targetSteerY = -stickY * 1.1; 
+                }
+
+                if (activeGamepad.buttons[0] && activeGamepad.buttons[0].pressed) fireLaser();         
+                if (activeGamepad.buttons[2] && activeGamepad.buttons[2].pressed) triggerPulseScan();  
+
+                if (activeGamepad.buttons[7] && activeGamepad.buttons[7].value > 0.1) thrustInput = 1;      
+                if (activeGamepad.buttons[6] && activeGamepad.buttons[6].value > 0.1) thrustInput = -1;     
+                if (activeGamepad.buttons[5] && activeGamepad.buttons[5].pressed) isHyperdrive = true;  
             } else {
-                steerX = mouse.x;
-                steerY = mouse.y;
+                modeStatusEl.innerText = "KEYBOARD EMULATOR";
+                modeStatusEl.style.color = "#ff00ff";
             }
 
-            if (mouse.clicked) {
-                fireLaser();
-            }
+            // Inertia steering dampening updates
+            const rotationAcceleration = 0.005;
+            const rotationDamping = 0.88; 
+            const maxVelocityThreshold = 0.038;
 
-            // Flight Acceleration Engine Modifiers
+            state.yawVelocity += -targetSteerX * rotationAcceleration;
+            state.pitchVelocity += targetSteerY * rotationAcceleration;
+
+            state.yawVelocity *= rotationDamping;
+            state.pitchVelocity *= rotationDamping;
+
+            state.yawVelocity = Math.max(-maxVelocityThreshold, Math.min(maxVelocityThreshold, state.yawVelocity));
+            state.pitchVelocity = Math.max(-maxVelocityThreshold, Math.min(maxVelocityThreshold, state.pitchVelocity));
+
+            shipGroup.rotateY(state.yawVelocity);
+            shipGroup.rotateX(state.pitchVelocity);
+
+            // Linear propulsion calculations
+            let calculatedTargetSpeed = 0;
             if (thrustInput === 1) {
-                state.targetSpeed = isHyperdrive ? state.maxSpeed * 150.0 : state.maxSpeed;
+                calculatedTargetSpeed = isHyperdrive ? state.maxSpeed * 150.0 : state.maxSpeed;
+                state.speed += (calculatedTargetSpeed - state.speed) * 0.045;
             } else if (thrustInput === -1) {
-                state.targetSpeed = -30; 
+                calculatedTargetSpeed = -30;
+                state.speed += (calculatedTargetSpeed - state.speed) * 0.08;
             } else {
-                state.targetSpeed *= 0.93; 
-                if (Math.abs(state.targetSpeed) < 0.1) state.targetSpeed = 0;
+                state.speed *= 0.988; 
+                if (Math.abs(state.speed) < 0.1) state.speed = 0;
             }
             
-            state.speed += (state.targetSpeed - state.speed) * 0.08;
-            document.getElementById('hud-speed').innerText = `${Math.round(state.speed * 12).toLocaleString()} u/s`;
+            document.getElementById('hud-speed').innerText = Math.round(state.speed * 12).toLocaleString() + " u/s";
 
-            shipGroup.rotateY(-steerX * 0.026);
-            shipGroup.rotateX(steerY * 0.026);
-            shipVisuals.rotation.z = steerX * -0.55; 
+            let targetRoll = state.yawVelocity * 12.0;
+            shipVisuals.rotation.z += (targetRoll - shipVisuals.rotation.z) * 0.10;
 
             const forwardVector = new THREE.Vector3(0, 0, -1).applyQuaternion(shipGroup.quaternion);
             state.universePos.addScaledVector(forwardVector, state.speed * 0.2);
 
-            // High-Efficiency Local Space Particle Scrolling
+            // Local spatial stars transformation
             const dustPositions = localSpaceDust.geometry.attributes.position.array;
             const speedMod = state.speed * 0.15;
             for (let i = 0; i < dustPositions.length; i += 3) {
@@ -753,7 +786,7 @@
             }
             localSpaceDust.geometry.attributes.position.needsUpdate = true;
 
-            // Relative Positioning Core Map Engine Render Shifts
+            // Global space coordinate matrix displacement
             let closestPlanetName = "None";
             let minPlanetDist = Infinity;
 
@@ -773,16 +806,14 @@
                     if (state.currentLocation !== p.name) {
                         state.currentLocation = p.name;
                         document.getElementById('hud-location').innerText = p.name;
-                        document.getElementById('hud-location').style.color = "#ffffff";
-                        showToast(`Entering upper orbital layer of ${p.name}`);
+                        showToast("Entering upper orbital layer of " + p.name);
                     }
                 }
             });
 
-            // Update Navigation Hud lines
             if (minPlanetDist !== Infinity) {
                 const distInKm = (minPlanetDist / 1000).toFixed(1);
-                document.getElementById('hud-navigation').innerText = `Nearest Nav-Point: ${closestPlanetName} [${distInKm}ku Away]`;
+                document.getElementById('hud-navigation').innerText = "Nearest Nav-Point: " + closestPlanetName + " [" + distInKm + "ku Away]";
             }
 
             if (state.currentLocation !== "Deep Space") {
@@ -793,12 +824,11 @@
                 if (!stillInside) {
                     state.currentLocation = "Deep Space";
                     document.getElementById('hud-location').innerText = "Deep Space";
-                    document.getElementById('hud-location').style.color = "#00ffcc";
                     showToast("Exiting into open star system matrix vacuum.");
                 }
             }
 
-            // Infinite Procedural Space Debris / Bone Re-pooling
+            // Bone Re-pooling Loops
             spaceBones.forEach(bone => {
                 bone.mesh.rotation.x += 0.01;
                 bone.mesh.rotation.y += 0.015;
@@ -823,7 +853,7 @@
                 }
             });
 
-            // Laser Blast Beam Relative Motion Calculations
+            // Lasers relative processing
             for (let i = lasers.length - 1; i >= 0; i--) {
                 const laser = lasers[i];
                 laser.relativePos.addScaledVector(laser.forward, 9.0);
@@ -853,7 +883,7 @@
                 }
             }
 
-            // Fixed Camera Cinematic Chase Rig
+            // Camera chase rig tracking loop
             const relativeCamOffset = new THREE.Vector3(0, 4, 18);
             const camOffset = relativeCamOffset.applyQuaternion(shipGroup.quaternion);
             camera.position.copy(shipGroup.position).add(camOffset);
